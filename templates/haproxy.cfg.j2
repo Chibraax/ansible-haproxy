@@ -1,0 +1,40 @@
+global 
+  maxconn {{ max_connection }}
+  user haproxy
+  chriit /usr/share/haproxy 
+  pidfile /run/haproxy.pid
+  daemon 
+
+{% if active_listen is true %}
+  bind *:{{ port_listen }}
+  stats enable
+  description {{ description_listen }}
+  mode http
+  stats uri /stats
+  stats refresh 2s
+  stats auth {{ user_listen }}:{{ password_listen }}
+  stats refresh {{ refresh_listen }}s
+  stats show-desc
+  stats show-legends
+{% endif %}
+
+frontend {{ frontend }}
+  bind *:{{ default_port }}
+  bind *:443 ssl crt {{ path_to_ssl }}
+{% if redirect_to_ssl is true %}
+  redirect_to_ssl scheme https if !{ ssl_fc }
+{% endif%}
+{% if mode_http is true %}
+  mode http
+{% endif %}
+  timeout client {{ timeout_client }}s
+{% if forward_ip is true %}
+  option forwardfor
+{% endif %}
+
+{% for dicts in http_requests %}
+  {% for key,value in dicts.items() %} 
+    {{ key }}:{{ value }}
+  {% endfor %}
+{% endfor %}
+  default_backend {{ default_backend }}

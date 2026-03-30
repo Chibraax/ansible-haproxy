@@ -1,0 +1,26 @@
+# ---
+# Listen
+max_connection: 20000
+active_listen: true
+port_listen: 9000
+description_listen: Informations interfaces
+user_listen: alex
+password_listen: root
+refresh_listen: 5
+# Frontend
+frontend_name: haproxy
+default_port: 80
+timeout_client: 20
+forward_ip: true
+mode_http: true
+http_requests:
+  X-My-Header: 123
+  Random-Header: salut_ça_va
+# Backend
+default_backend: website
+balance_algo: roundrobin
+name_server_backend: server_python
+url_backend: localhost:8888
+# SSL
+path_to_ssl: /root/full_certificate.pem
+redirect_to_ssl: true

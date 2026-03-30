@@ -1,0 +1,10 @@
+---
+- name: haproxy_reload
+  ansible.builtin.service:
+    name: haproxy
+    state: reloaded
+
+- name: apache2_reload
+  ansible.builtin.service:
+    name: apache2
+    state: reloaded

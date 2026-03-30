@@ -1,0 +1,27 @@
+---
+- name: Install haproxy
+  ansible.builtin.apt:
+    name: haproxy
+    update_cache: true
+  become: true
+  tags:
+    - haproxy
+
+- name: Backup haproxy old config
+  ansible.builtin.copy:
+    src: /etc/haproxy/haproxy.cfg
+    dest: /etc/haproxy/haproxy.cfg.bak
+    remote_src: true
+    mode: '0644'
+  become: true
+  tags:
+    - haproxy
+
+- name: Copy the config HAProxy
+  ansible.builtin.template:
+    src: templates/haproxy/haproxy.conf
+    dest: /etc/haproxy/haproxy.cfg
+    mode: '0644'
+  notify: haproxy_reload
+  tags:
+    - haproxy
