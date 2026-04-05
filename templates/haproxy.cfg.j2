@@ -38,3 +38,7 @@ frontend {{ frontend }}
   {% endfor %}
 {% endfor %}
   default_backend {{ default_backend }}
+
+backend {{ default_backend }}
+  mode http
+  server app1 {{ url_backend }}
