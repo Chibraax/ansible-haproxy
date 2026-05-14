@@ -19,7 +19,7 @@
 
 - name: Copy the config HAProxy
   ansible.builtin.template:
-    src: templates/haproxy/profy.cfg
+    src: templates/haproxy/proxy.cfg
     dest: /etc/haproxy/proxy.cfg
     mode: '0644'
   notify: haproxy_reload
