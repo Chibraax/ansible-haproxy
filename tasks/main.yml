@@ -12,6 +12,6 @@
     src: templates/haproxy/proxy.cfg
     dest: /etc/haproxy/haproxy.cfg
     mode: '0644'
-  notify: haproxy_reload
+  notify: haproxy_restarted
   tags:
     - haproxy
